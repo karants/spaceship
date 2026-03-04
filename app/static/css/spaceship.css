@@ -209,7 +209,7 @@ body {
   font-weight: 300;
   color: var(--paper);
   letter-spacing: 0.08em;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.1rem;
 }
 
 .launchpad-subtitle {
@@ -218,7 +218,7 @@ body {
   letter-spacing: 0.35em;
   color: var(--gold);
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 0.05rem;
 }
 
 .launchpad-links {
@@ -226,6 +226,7 @@ body {
   gap: 2rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 2rem;
 }
 
 .launchpad-card {
