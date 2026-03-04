@@ -9,7 +9,7 @@ import os
 
 from flask import Flask
 
-from .database import Database, EarthPhotoModel, MissionLogModel
+from .database import EarthPhotoModel, MissionLogModel, create_database, init_schema
 from .security import apply_security_headers, generate_csrf_token
 from .storage import create_storage
 
@@ -24,9 +24,9 @@ def launch(config_name: str = "config.DevelopmentConfig") -> Flask:
     )
     app.config.from_object(config_name)
 
-    # ---- Database ----
-    db = Database.get_instance(app.config["DATABASE_PATH"])
-    db.init_schema()
+# ---- Database (local SQLite or Turso, based on config) ----
+    db = create_database(app)
+    init_schema(db)
     app.extensions["db"] = db
     app.extensions["mission_log_model"] = MissionLogModel(db)
     app.extensions["earth_photo_model"] = EarthPhotoModel(db)
@@ -43,7 +43,7 @@ def launch(config_name: str = "config.DevelopmentConfig") -> Flask:
 
     # ---- Jinja template globals ----
     app.jinja_env.globals["csrf_token"] = generate_csrf_token
-    
+
     from datetime import datetime
 
     def timestamp_to_date(value):

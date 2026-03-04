@@ -24,7 +24,13 @@ class Config:
     KEY_FILE = os.path.join(INSTANCE_DIR, "access.key")
 
     # Database
+    # Database — local SQLite path (development fallback)
     DATABASE_PATH = os.path.join(INSTANCE_DIR, "spaceship.db")
+
+    # Turso — free cloud SQLite (production)
+    # Set these in .env; leave empty to fall back to local SQLite
+    TURSO_DATABASE_URL = os.environ.get("TURSO_DATABASE_URL", "")
+    TURSO_AUTH_TOKEN = os.environ.get("TURSO_AUTH_TOKEN", "")
 
     # Local upload fallback (used only when Cloudinary is not configured)
     UPLOAD_FOLDER = os.path.join(BASE_DIR, "app", "static", "uploads")
