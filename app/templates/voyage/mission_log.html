@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Mission Log — Spaceship{% endblock %}
+
+{% block content %}
+<section class="mission-log">
+  <div class="section-label">Transmitting from Command Module...</div>
+  <h1 class="section-title">{{ mission.heading or 'Mission Log' }}</h1>
+  <div class="divider"></div>
+
+  <div class="mission-profile">
+    {% if mission.photo_ref %}
+    <div class="mission-photo-wrap">
+      <img src="{{ storage.url_for(mission.photo_ref) }}"
+           alt="Portrait"
+           draggable="false"
+           loading="lazy">
+    </div>
+    {% endif %}
+
+    <div class="mission-body">
+      {% for paragraph in (mission.body or '').split('\n') %}
+        {% if paragraph.strip() %}
+          <p>{{ paragraph }}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

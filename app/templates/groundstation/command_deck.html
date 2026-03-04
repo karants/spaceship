@@ -1,0 +1,58 @@
+{% extends "groundstation/base_station.html" %}
+{% block title %}Command Deck — Spaceship{% endblock %}
+
+{% block content %}
+<div class="station-header">
+  <h1 class="station-title">Command Deck</h1>
+  <div>
+    <a href="{{ url_for('voyage.launchpad') }}" class="station-btn station-btn--sm">View Site</a>
+    <a href="{{ url_for('groundstation.logout') }}" class="station-btn station-btn--sm station-btn--danger">End Session</a>
+  </div>
+</div>
+
+<!-- Mission Log section -->
+<div class="station-card">
+  <h3>Mission Log</h3>
+  <p style="color: var(--faint); font-size: 0.95rem; margin-bottom: 0.8rem;">
+    {{ mission.heading or 'No heading set' }}
+  </p>
+  <p style="color: var(--mid); font-size: 0.85rem; margin-bottom: 1rem;">
+    {{ (mission.body or 'No content yet.')[:200] }}{% if (mission.body or '')|length > 200 %}…{% endif %}
+  </p>
+  <a href="{{ url_for('groundstation.edit_mission_log') }}" class="station-btn station-btn--sm">Edit Mission Log</a>
+</div>
+
+<!-- Gallery section -->
+<div class="station-card">
+  <h3>Our Earth — Gallery</h3>
+  <div style="margin-bottom: 1rem;">
+    <a href="{{ url_for('groundstation.add_photo') }}" class="station-btn station-btn--sm">Transmit Photo</a>
+  </div>
+
+  {% if photos %}
+    {% for photo in photos %}
+    <div class="photo-list-item">
+      <img class="photo-thumb"
+           src="{{ storage.url_for(photo.reference) }}"
+           alt="{{ photo.caption[:40] if photo.caption else 'Photo' }}">
+      <div class="photo-list-info">
+        <div class="photo-list-caption">{{ photo.caption or '(no caption)' }}</div>
+        <div style="font-family:'Courier Prime',monospace;font-size:0.55rem;color:var(--mid);letter-spacing:0.1em;margin-top:0.2rem;">
+          ORDER: {{ photo.sort_order }}
+        </div>
+      </div>
+      <div class="photo-list-actions">
+        <a href="{{ url_for('groundstation.edit_photo', photo_id=photo.id) }}" class="station-btn station-btn--sm">Edit</a>
+        <form method="post" action="{{ url_for('groundstation.delete_photo', photo_id=photo.id) }}"
+              onsubmit="return confirm('Remove this photo from the gallery?')">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="station-btn station-btn--sm station-btn--danger">Delete</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p style="color: var(--mid); font-style: italic; font-size: 0.9rem;">No photos transmitted yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

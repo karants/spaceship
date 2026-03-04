@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Spaceship{% endblock %}
+
+{% block content %}
+<div class="launchpad-hero">
+  <div class="launchpad-subtitle">Welcome Aboard</div>
+  <h1 class="launchpad-title">Spaceship</h1>
+  <div class="divider divider--center"></div>
+
+  <div class="launchpad-links">
+    <a href="{{ url_for('voyage.mission_log') }}" class="launchpad-card">
+      <div class="launchpad-card__label">01 — identity</div>
+      <div class="launchpad-card__name">Mission Log</div>
+      <div class="launchpad-card__desc">Meet the crew</div>
+    </a>
+
+    <a href="{{ url_for('voyage.our_earth') }}" class="launchpad-card">
+      <div class="launchpad-card__label">02 — perspective</div>
+      <div class="launchpad-card__name">Our Earth</div>
+      <div class="launchpad-card__desc">Views from the Cupola onboard</div>
+    </a>
+  </div>
+</div>
+{% endblock %}

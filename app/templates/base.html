@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Spaceship{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/spaceship.css') }}">
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- Star field -->
+<div class="stars" id="stars" aria-hidden="true"></div>
+
+<!-- Burger navigation -->
+<nav class="burger-nav" id="burgerNav">
+  <button class="burger-btn" id="burgerBtn" aria-label="Open navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-drawer" id="navDrawer">
+    <a href="{{ url_for('voyage.launchpad') }}" class="nav-link">Launch Pad</a>
+    <a href="{{ url_for('voyage.mission_log') }}" class="nav-link">Mission Log</a>
+    <a href="{{ url_for('voyage.our_earth') }}" class="nav-link">Our Earth</a>
+  </div>
+</nav>
+
+<main class="page">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="divider"></div>
+  <p class="footer-text">"It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth.</p><p class="footer-text"> I didn't feel like a giant. I felt very, very small."</p>
+  <p class="footer-attr">— Neil Armstrong</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/spaceship.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

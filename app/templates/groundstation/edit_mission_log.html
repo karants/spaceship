@@ -1,0 +1,43 @@
+{% extends "groundstation/base_station.html" %}
+{% block title %}Edit Mission Log — Spaceship{% endblock %}
+
+{% block content %}
+<div class="station-header">
+  <h1 class="station-title">Edit Mission Log</h1>
+  <a href="{{ url_for('groundstation.command_deck') }}" class="station-btn station-btn--sm">Back to Deck</a>
+</div>
+
+<form method="post" action="{{ url_for('groundstation.edit_mission_log') }}" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
+  <div class="station-card">
+    <div class="form-group">
+      <label class="form-label" for="heading">Heading</label>
+      <input class="form-input" type="text" id="heading" name="heading"
+             value="{{ mission.heading or '' }}" maxlength="200" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="body">Transmission</label>
+      <textarea class="form-textarea" id="body" name="body" rows="10"
+                maxlength="10000" required>{{ mission.body or '' }}</textarea>
+      <p style="font-size:0.65rem;color:var(--mid);margin-top:0.3rem;">
+        Use line breaks to create paragraphs.
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="photo">Profile Photo</label>
+      {% if mission.photo_ref %}
+      <p style="font-size:0.7rem;color:var(--mid);margin-bottom:0.5rem;">
+        A photo is currently set — uploading a new one replaces it.
+      </p>
+      {% endif %}
+      <input class="form-file" type="file" id="photo" name="photo"
+             accept=".jpg,.jpeg,.png,.webp,.gif">
+    </div>
+
+    <button type="submit" class="station-btn">Save Transmission</button>
+  </div>
+</form>
+{% endblock %}

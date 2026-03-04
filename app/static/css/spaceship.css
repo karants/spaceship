@@ -1,0 +1,732 @@
+/* ============================================================
+   SPACESHIP — Design System
+   Fonts:  Cormorant Garamond (serif) + Courier Prime (mono)
+   Palette from the Morning Reminders constellation.
+   ============================================================ */
+
+:root {
+  --ink:    #0d0d14;
+  --paper:  #f5f2ec;
+  --accent: #1a3a5c;
+  --gold:   #b8860b;
+  --faint:  #c8c4bb;
+  --mid:    #6b6760;
+  --blue:   #4a90c4;
+  --danger: #c44a4a;
+  --success:#4ac46a;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-weight: 300;
+  min-height: 100vh;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(184, 134, 11, 0.35);
+  color: var(--paper);
+}
+
+/* ============================================================
+   STAR FIELD
+   ============================================================ */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle var(--d, 4s) ease-in-out infinite;
+  opacity: var(--o, 0.4);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--o, 0.4); transform: scale(1); }
+  50%      { opacity: 0.1; transform: scale(0.5); }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem 2rem;
+  min-height: calc(100vh - 120px);
+}
+
+/* ============================================================
+   BURGER NAVIGATION
+   ============================================================ */
+.burger-nav {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+}
+
+.burger-btn {
+  background: rgba(13, 13, 20, 0.7);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  border-radius: 4px;
+  padding: 10px 9px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: border-color 0.3s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.burger-btn:hover { border-color: var(--gold); }
+
+.burger-btn span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.burger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger-btn.open span:nth-child(2) { opacity: 0; }
+.burger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-drawer {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  background: rgba(13, 13, 20, 0.92);
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  border-radius: 4px;
+  padding: 0.6rem 0;
+  min-width: 180px;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-drawer.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.55rem 1.4rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--gold);
+  background: rgba(184, 134, 11, 0.08);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.section-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 300;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--faint);
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 1rem 0;
+}
+
+.divider--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   LAUNCH PAD (Landing Page)
+   ============================================================ */
+.launchpad-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 70vh;
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.launchpad-title {
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 300;
+  color: var(--paper);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.launchpad-subtitle {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+.launchpad-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.launchpad-card {
+  display: block;
+  text-decoration: none;
+  background: rgba(245, 242, 236, 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+  border-left: 2px solid var(--gold);
+  padding: 1.6rem 2.2rem;
+  border-radius: 2px;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  min-width: 200px;
+  text-align: left;
+}
+
+.launchpad-card:hover {
+  background: rgba(245, 242, 236, 0.07);
+  border-color: rgba(184, 134, 11, 0.5);
+  transform: translateY(-2px);
+}
+
+.launchpad-card__label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.launchpad-card__name {
+  font-size: 1.2rem;
+  color: var(--paper);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+.launchpad-card__desc {
+  font-size: 0.85rem;
+  color: var(--mid);
+  margin-top: 0.3rem;
+}
+
+/* ============================================================
+   MISSION LOG (Identity / About)
+   ============================================================ */
+.mission-log {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.mission-profile {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+.mission-photo-wrap {
+  flex-shrink: 0;
+  width: clamp(160px, 30vw, 280px);
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mission-photo-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  pointer-events: none;
+}
+
+.mission-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.mission-body {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--paper);
+}
+
+.mission-body p { margin-bottom: 1rem; }
+
+@media (max-width: 640px) {
+  .mission-profile {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .mission-photo-wrap { width: clamp(180px, 60vw, 300px); }
+}
+
+/* ============================================================
+   OUR EARTH GALLERY
+   ============================================================ */
+.gallery {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.gallery-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.gallery-item {
+  background: rgba(245, 242, 236, 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.gallery-item:hover { border-color: rgba(184, 134, 11, 0.4); }
+
+.gallery-img-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+
+.gallery-date {
+  padding: 0.4rem 1.6rem 1rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.gallery-img-wrap img {
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.gallery-img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.gallery-caption {
+  padding: 1.2rem 1.6rem;
+  font-size: 1rem;
+  color: var(--faint);
+  font-style: italic;
+  border-top: 1px solid rgba(184, 134, 11, 0.1);
+}
+
+/* ---- Pagination ---- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.pagination__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  border-radius: 50%;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.pagination__arrow:hover {
+  background: rgba(184, 134, 11, 0.12);
+  border-color: var(--gold);
+  transform: scale(1.08);
+}
+
+.pagination__arrow--disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.pagination__arrow svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pagination__info {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--mid);
+  text-transform: uppercase;
+}
+
+.gallery-empty {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--mid);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem 2rem 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  color: var(--mid);
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.footer-attr {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  color: var(--gold);
+  opacity: 0.5;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   GROUND STATION (Control Panel)
+   ============================================================ */
+.station-page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.station-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.station-title {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+}
+
+.station-btn {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  border-radius: 2px;
+  color: var(--gold);
+  background: rgba(184, 134, 11, 0.06);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.station-btn:hover {
+  background: rgba(184, 134, 11, 0.15);
+  border-color: var(--gold);
+}
+
+.station-btn--danger {
+  color: var(--danger);
+  border-color: rgba(196, 74, 74, 0.3);
+  background: rgba(196, 74, 74, 0.06);
+}
+
+.station-btn--danger:hover {
+  background: rgba(196, 74, 74, 0.15);
+  border-color: var(--danger);
+}
+
+.station-btn--sm {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.6rem;
+}
+
+.station-card {
+  background: rgba(245, 242, 236, 0.04);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+  border-radius: 2px;
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.station-card h3 {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+
+/* ---- Forms ---- */
+.form-group { margin-bottom: 1.4rem; }
+
+.form-label {
+  display: block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--paper);
+  background: rgba(245, 242, 236, 0.05);
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-radius: 2px;
+  transition: border-color 0.3s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.form-file {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  color: var(--faint);
+}
+
+.form-file::file-selector-button {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  border-radius: 2px;
+  color: var(--gold);
+  background: rgba(184, 134, 11, 0.06);
+  cursor: pointer;
+  margin-right: 0.8rem;
+}
+
+/* ---- Flash messages ---- */
+.flash {
+  padding: 0.7rem 1.2rem;
+  border-radius: 2px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.2rem;
+}
+
+.flash--success {
+  background: rgba(74, 196, 106, 0.1);
+  border: 1px solid rgba(74, 196, 106, 0.3);
+  color: var(--success);
+}
+
+.flash--error {
+  background: rgba(196, 74, 74, 0.1);
+  border: 1px solid rgba(196, 74, 74, 0.3);
+  color: var(--danger);
+}
+
+/* ---- Photo list in command deck ---- */
+.photo-list-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(184, 134, 11, 0.08);
+}
+
+.photo-list-item:last-child { border-bottom: none; }
+
+.photo-thumb {
+  width: 80px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  flex-shrink: 0;
+}
+
+.photo-list-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.photo-list-caption {
+  font-size: 0.9rem;
+  color: var(--faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.photo-list-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ---- Login ---- */
+.login-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+}
+
+.login-box {
+  background: rgba(245, 242, 236, 0.04);
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-radius: 2px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.login-box .section-label { margin-bottom: 1.5rem; }
+
+.login-error {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  color: var(--danger);
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .page { padding: 3.5rem 1.2rem 1.2rem; }
+  .launchpad-links { flex-direction: column; align-items: stretch; }
+  .launchpad-card { min-width: unset; }
+  .pagination { gap: 1rem; }
+  .station-page { padding: 2rem 1.2rem; }
+  .photo-list-item { flex-direction: column; align-items: flex-start; }
+}
