@@ -18,7 +18,7 @@
              loading="lazy">
       </div>
       {% if photo.caption %}
-      <div class="gallery-caption">{{ photo.caption }}</div>
+      <div class="gallery-caption">{{ photo.caption | replace('\n', '<br>') | safe }}</div>
       {% endif %}
       <div class="gallery-date">{{ photo.created_at | timestamp_to_date }}</div>
     </article>
